@@ -11,7 +11,7 @@ ETA = 20
 PP_K = 2*ETA*(DIM - 1) + 1
 print(PP_K)
 
-dataset = np.load(_DIR_ + 'face3_vec.npy')
+dataset = np.load(_DIR_ + 'L3_vec.npy')
 data_X = dataset[:,:PP_K]
 data_y = dataset[:,PP_K:]
 X_train = data_X[:65000]

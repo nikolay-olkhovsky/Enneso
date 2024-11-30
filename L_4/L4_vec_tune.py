@@ -5,13 +5,13 @@ from tensorflow import keras
 from tensorflow.keras.layers import Dense, Activation, Dropout
 from wandb.keras import WandbCallback
 
-_DIR_ = '/home/olkhovskiina/cross5_rank1000/face1/'
+_DIR_ = '/home/olkhovskiina/cross5_rank1000/L_4/'
 DIM = 5
 ETA = 20
 PP_K = 2*ETA*(DIM - 1) + 1
 print(PP_K)
 
-dataset = np.load(_DIR_ + 'face1_vec.npy')
+dataset = np.load(_DIR_ + 'L4_vec.npy')
 data_X = dataset[:,:PP_K]
 data_y = dataset[:,PP_K:]
 X_train = data_X[:65000]

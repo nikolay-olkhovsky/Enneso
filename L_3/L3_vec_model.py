@@ -14,13 +14,13 @@ tensorflow.test.is_gpu_available()
 
 import numpy as np
 
-_DIR_ = '/home/olkhovskiina/cross5_rank1000/'
+_DIR_ = 'D:/DNN/cross5_rank1000/L_3/'
 DIM = 5
 ETA = 20
 PP_K = 2*ETA*(DIM - 1) + 1
 print(PP_K)
 
-dataset = np.load(_DIR_ + 'face3_vec.npy')
+dataset = np.load(_DIR_ + 'L3_vec.npy')
 data_X = dataset[:,:PP_K]
 data_y = dataset[:,PP_K:]
 print(data_X.shape)
@@ -55,22 +55,19 @@ from tensorflow.keras.layers import Dense, Activation, Dropout
 model = keras.models.Sequential(name="Retina")
 
 model.add(Dense(PP_K, name="input"))
-model.add(Activation('sigmoid'))
-model.add(Dropout(0.))
-model.add(Dense(4096, name="hidden1"))
-model.add(Activation('tanh'))
+model.add(Activation('relu'))
 model.add(Dropout(0.3))
-model.add(Dense(4096, name="middle1"))
+model.add(Dense(4096, name="hidden1"))
 model.add(Activation('relu'))
 model.add(Dropout(0.15))
-model.add(Dense(4096, name="middle2"))
+model.add(Dense(512, name="middle1"))
 model.add(Activation('relu'))
-model.add(Dropout(0.15))
+model.add(Dropout(0.45))
 model.add(Dense(DIM, name="output"))
 
 model.compile(
     loss=module_loss,
-    optimizer=keras.optimizers.RMSprop(learning_rate=0.000075),
+    optimizer=keras.optimizers.RMSprop(learning_rate=0.0001),
     metrics=['mae'],
 )
 
@@ -82,7 +79,7 @@ _ = model.fit(
         x=X_train, 
         y=y_train,
         epochs=300,
-        batch_size=256,
+        batch_size=50,
         validation_data=(X_test, y_test),
 #        callbacks=[WandbCallback(save_model=False, save_graph=False)],
 #        verbose=2
@@ -92,5 +89,5 @@ _ = model.fit(
 # In[6]:
 
 
-model.save(_DIR_ + 'face3_vec.h5', save_format='h5')
+model.save(_DIR_ + 'L3_vec.h5', save_format='h5')
 
